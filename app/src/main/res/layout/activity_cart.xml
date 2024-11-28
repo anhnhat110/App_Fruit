@@ -10,7 +10,7 @@
         android:id="@+id/emptyTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="your cart is Empty"
+        android:text="Giỏ hàng đang trống"
         android:textColor="@color/blue_grey"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -33,7 +33,7 @@
                 android:id="@+id/textView14"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Cart"
+                android:text="Giỏ hàng"
                 android:textAlignment="center"
                 android:textColor="@color/blue_grey"
                 android:textSize="24sp"
@@ -59,7 +59,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/grey_background"
                     android:ems="10"
-                    android:hint="Enter Your Code"
+                    android:hint="Nhập mã giảm giá"
                     android:inputType="text"
                     android:textAlignment="center"
                     android:textColor="@color/blue_grey"
@@ -73,7 +73,7 @@
                     android:layout_height="40dp"
                     android:background="@drawable/red_button_background2"
 
-                    android:text="Apply Coupon"
+                    android:text="Áp dụng mã"
                     android:textColor="@color/white" />
             </LinearLayout>
 
@@ -82,7 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Order Summary"
+                android:text="Hóa đơn"
                 android:textColor="@color/blue_grey"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="Subtotal"
+                    android:text="Giá đơn hàng"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -110,7 +110,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Delivery"
+                    android:text="Vận chuyển"
                     app:layout_constraintStart_toStartOf="@+id/textView17"
                     app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
@@ -120,7 +120,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Total Tax"
+                    android:text="Phí khác"
                     app:layout_constraintStart_toStartOf="@+id/textView19"
                     app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
@@ -172,7 +172,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Total"
+                    android:text="Tổng thanh toán"
                     app:layout_constraintStart_toStartOf="@+id/textView21"
                     app:layout_constraintTop_toBottomOf="@+id/view4" />
 
@@ -196,7 +196,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/red_button_background"
-                android:text="Place Order"
+                android:text="Đặt hàng"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
         </LinearLayout>

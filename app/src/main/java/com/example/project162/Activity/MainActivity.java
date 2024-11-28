@@ -21,6 +21,7 @@ import com.example.project162.Domain.Time;
 import com.example.project162.R;
 import com.example.project162.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,7 +38,13 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            binding.textView10.setText(currentUser.getEmail()); // Giả sử ID của TextView là textView9
+        } else {
+            binding.textView10.setText("No user logged in");
+        }
 
         initLocation();
         initTime();
