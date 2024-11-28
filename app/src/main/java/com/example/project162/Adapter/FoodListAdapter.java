@@ -40,7 +40,11 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.viewho
     public void onBindViewHolder(@NonNull FoodListAdapter.viewholder holder, int position) {
         holder.titleTxt.setText(items.get(position).getTitle());
         holder.timeTxt.setText(items.get(position).getTimeValue() + " min");
-        holder.priceTxt.setText( items.get(position).getPrice() + " vnd" );
+
+        // Định dạng giá với dấu chấm để hiển thị
+        String formattedPrice = formatPriceWithCommas(items.get(position).getPrice());
+        holder.priceTxt.setText(formattedPrice + " VND");
+
         holder.rateTxt.setText("" + items.get(position).getStar());
 
         Glide.with(context)
@@ -49,8 +53,8 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.viewho
                 .into(holder.pic);
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent=new Intent(context, DetailActivity.class);
-            intent.putExtra("object",items.get(position));
+            Intent intent = new Intent(context, DetailActivity.class);
+            intent.putExtra("object", items.get(position));
             context.startActivity(intent);
         });
     }
@@ -66,13 +70,17 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.viewho
 
         public viewholder(@NonNull View itemView) {
             super(itemView);
-
             titleTxt = itemView.findViewById(R.id.titleTxt);
             priceTxt = itemView.findViewById(R.id.priceTxt);
             rateTxt = itemView.findViewById(R.id.rateTxt);
             timeTxt = itemView.findViewById(R.id.timeTxt);
             pic = itemView.findViewById(R.id.img);
-
         }
+    }
+
+    // Phương thức định dạng giá với dấu chấm giữa mỗi 3 chữ số
+    private String formatPriceWithCommas(double price) {
+        // Dùng String.format để định dạng giá với dấu chấm mỗi 3 chữ số
+        return String.format("%,d", (int) price).replace(',', '.');
     }
 }
