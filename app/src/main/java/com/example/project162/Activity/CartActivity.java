@@ -8,10 +8,11 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.project162.Adapter.CartAdapter;
-import com.example.project162.Helper.ChangeNumberItemsListener;
 import com.example.project162.Helper.ManagmentCart;
 import com.example.project162.R;
 import com.example.project162.databinding.ActivityCartBinding;
+
+import java.text.DecimalFormat;
 
 public class CartActivity extends BaseActivity {
     private ActivityCartBinding binding;
@@ -48,18 +49,25 @@ public class CartActivity extends BaseActivity {
     }
 
     private void calculateCart() {
-        double percentTax = 0.02; //percent 2% tax
+        double percentTax = 0.02; // percent 2% tax
         double delivery = 10; // 10 Dollar
 
-        tax = Math.round(managmentCart.getTotalFee() * percentTax * 100.0) / 100;
+        tax = Math.round(managmentCart.getTotalFee() * percentTax * 100.0) / 100.0;
 
-        double total = Math.round((managmentCart.getTotalFee() + tax + delivery) * 100) / 100;
-        double itemTotal = Math.round(managmentCart.getTotalFee() * 100) / 100;
+        double total = Math.round((managmentCart.getTotalFee() + tax + delivery) * 100.0) / 100.0;
+        double itemTotal = Math.round(managmentCart.getTotalFee() * 100.0) / 100.0;
 
-        binding.totalFeeTxt.setText( itemTotal +" vnd");
-        binding.taxTxt.setText( tax + " vnd");
-        binding.deliveryTxt.setText(delivery + " vnd");
-        binding.totalTxt.setText(total + " vnd");
+        // Sử dụng DecimalFormat để định dạng giá trị và thay dấu ',' bằng '.'
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        String formattedItemTotal = formatter.format(itemTotal).replace(',', '.');
+        String formattedTax = formatter.format(tax).replace(',', '.');
+        String formattedDelivery = formatter.format(delivery).replace(',', '.');
+        String formattedTotal = formatter.format(total).replace(',', '.');
+
+        binding.totalFeeTxt.setText(formattedItemTotal + " VND");
+        binding.taxTxt.setText(formattedTax + " VND");
+        binding.deliveryTxt.setText(formattedDelivery + " VND");
+        binding.totalTxt.setText(formattedTotal + " VND");
     }
 
     private void setVariable() {

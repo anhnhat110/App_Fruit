@@ -37,24 +37,29 @@ public class DetailActivity extends BaseActivity {
                 .load(object.getImagePath())
                 .into(binding.pic);
 
-        binding.priceTxt.setText(object.getPrice() + " vnd");
+        // Định dạng giá với dấu chấm để hiển thị
+        String formattedPrice = formatPriceWithCommas(object.getPrice());
+        binding.priceTxt.setText(formattedPrice + " VND");
+
         binding.titleTxt.setText(object.getTitle());
         binding.descriptionTxt.setText(object.getDescription());
         binding.rateTxt.setText(object.getStar() + " Rating");
         binding.ratingBar.setRating((float) object.getStar());
-        binding.totalTxt.setText((num * object.getPrice() + " vnd"));
+
+        // Tính tổng giá trị của sản phẩm với số lượng
+        binding.totalTxt.setText(formatPriceWithCommas(num * object.getPrice()) + " VND");
 
         binding.plusBtn.setOnClickListener(v -> {
             num = num + 1;
             binding.numTxt.setText(num + " ");
-            binding.totalTxt.setText( (num * object.getPrice()) + " vnd");
+            binding.totalTxt.setText(formatPriceWithCommas(num * object.getPrice()) + " VND");
         });
 
         binding.minusBtn.setOnClickListener(v -> {
             if (num > 1) {
                 num = num - 1;
                 binding.numTxt.setText(num + "");
-                binding.totalTxt.setText((num * object.getPrice()) + " vnd");
+                binding.totalTxt.setText(formatPriceWithCommas(num * object.getPrice()) + " VND");
             }
         });
 
@@ -62,6 +67,11 @@ public class DetailActivity extends BaseActivity {
             object.setNumberInCart(num);
             managmentCart.insertFood(object);
         });
+    }
+
+    private String formatPriceWithCommas(double price) {
+        // Dùng String.format để định dạng số với dấu chấm giữa mỗi 3 chữ số
+        return String.format("%,d", (int) price).replace(',', '.');
     }
 
     private void getIntentExtra() {

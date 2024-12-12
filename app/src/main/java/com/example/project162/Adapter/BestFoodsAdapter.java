@@ -39,9 +39,11 @@ public class BestFoodsAdapter extends RecyclerView.Adapter<BestFoodsAdapter.view
     @Override
     public void onBindViewHolder(@NonNull BestFoodsAdapter.viewholder holder, int position) {
         holder.titleTxt.setText(items.get(position).getTitle());
-        holder.priceTxt.setText(items.get(position).getPrice() + " vnd");
+        holder.priceTxt.setText(String.format("%d VND", (int) items.get(position).getPrice()));
         holder.timeTxt.setText(items.get(position).getTimeValue() + " min");
         holder.starTxt.setText("" + items.get(position).getStar());
+
+        holder.priceTxt.setTextColor(context.getResources().getColor(R.color.greentext));
 
         Glide.with(context)
                 .load(items.get(position).getImagePath())
@@ -49,11 +51,12 @@ public class BestFoodsAdapter extends RecyclerView.Adapter<BestFoodsAdapter.view
                 .into(holder.pic);
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent=new Intent(context, DetailActivity.class);
-            intent.putExtra("object",items.get(position));
+            Intent intent = new Intent(context, DetailActivity.class);
+            intent.putExtra("object", items.get(position));
             context.startActivity(intent);
         });
     }
+
 
     @Override
     public int getItemCount() {
@@ -71,6 +74,7 @@ public class BestFoodsAdapter extends RecyclerView.Adapter<BestFoodsAdapter.view
             starTxt = itemView.findViewById(R.id.starTxt);
             timeTxt = itemView.findViewById(R.id.timeTxt);
             pic = itemView.findViewById(R.id.pic);
+
         }
     }
 }

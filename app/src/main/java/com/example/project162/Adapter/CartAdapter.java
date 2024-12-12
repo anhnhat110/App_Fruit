@@ -40,27 +40,42 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewholder> {
 
     @Override
     public void onBindViewHolder(@NonNull CartAdapter.viewholder holder, int position) {
-        holder.title.setText(list.get(position).getTitle());
-        holder.feeEachItem.setText((list.get(position).getNumberInCart()*list.get(position).getPrice()) + " vnd");
-        holder.totalEachItem.setText(list.get(position).getNumberInCart()+" * "+(
-                list.get(position).getPrice())+ " vnd");
-        holder.num.setText(list.get(position).getNumberInCart()+"");
+        Foods food = list.get(position);
 
+        holder.title.setText(food.getTitle());
+
+        // Định dạng giá tiền cho từng sản phẩm
+        holder.feeEachItem.setText(formatPriceWithCommas(food.getNumberInCart() * food.getPrice()) + " VND");
+
+        // Định dạng tổng giá của mỗi món ăn
+        holder.totalEachItem.setText(food.getNumberInCart() + " * " + formatPriceWithCommas(food.getPrice()) + " VND");
+
+        // Hiển thị số lượng
+        holder.num.setText(String.valueOf(food.getNumberInCart()));
+
+        // Hiển thị hình ảnh với Glide
         Glide.with(holder.itemView.getContext())
-                .load(list.get(position).getImagePath())
-                .transform(new CenterCrop(),new RoundedCorners(30))
+                .load(food.getImagePath())
+                .transform(new CenterCrop(), new RoundedCorners(30))
                 .into(holder.pic);
 
+        // Tăng số lượng
         holder.plusItem.setOnClickListener(v -> managmentCart.plusNumberItem(list, position, () -> {
             notifyDataSetChanged();
             changeNumberItemsListener.change();
         }));
 
+        // Giảm số lượng
         holder.minusItem.setOnClickListener(v -> managmentCart.minusNumberItem(list, position, () -> {
             notifyDataSetChanged();
             changeNumberItemsListener.change();
         }));
     }
+
+    private String formatPriceWithCommas(double price) {
+        return String.format("%,d", (int) price).replace(',', '.');
+    }
+
 
     @Override
     public int getItemCount() {
