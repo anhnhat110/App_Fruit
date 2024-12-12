@@ -73,7 +73,6 @@ public class DetailActivity extends BaseActivity {
         // Dùng String.format để định dạng số với dấu chấm giữa mỗi 3 chữ số
         return String.format("%,d", (int) price).replace(',', '.');
     }
-
     private void getIntentExtra() {
         object = (Foods) getIntent().getSerializableExtra("object");
     }
