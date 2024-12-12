@@ -24,8 +24,8 @@ public class Price {
     @Override
     public String toString() {
         if (Value.contains(".0")) {
-            return Value.replace(".0", "") + " VND";
+            return Value.replace(".0", "") + " VNĐ";
         }
-        return Value + " VND";
+        return Value + " VNĐ";
     }
 }

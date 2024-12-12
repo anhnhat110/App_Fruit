@@ -38,7 +38,6 @@ public class MainActivity extends BaseActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
         initLocation();
         initTime();
         initPrice();
@@ -64,6 +63,12 @@ public class MainActivity extends BaseActivity {
         });
 
         binding.cartBtn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, CartActivity.class)));
+
+        // New button listener to navigate to ActivityListBestDeal
+        binding.buttonViewAllBestDeal.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ListBestDealActivity.class); // Intent to new Activity
+            startActivity(intent);
+        });
     }
 
     private void initBestFood() {

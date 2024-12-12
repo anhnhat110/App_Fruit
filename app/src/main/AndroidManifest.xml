@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.INTERNET"/>
-
 
     <application
         android:allowBackup="true"
@@ -14,6 +12,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Project162"
         tools:targetApi="31">
+
+        <!-- Các hoạt động khác của bạn -->
+        <activity
+            android:name=".Activity.MainActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".Activity.IntroActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Activity.ListBestDealActivity"
+            android:exported="true" />
         <activity
             android:name=".Activity.CartActivity"
             android:exported="false" />
@@ -24,11 +40,6 @@
             android:name=".Activity.ListFoodsActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.MainActivity"
-            android:exported="true">
-
-        </activity>
-        <activity
             android:name=".Activity.SignupActivity"
             android:exported="false" />
         <activity
@@ -37,13 +48,7 @@
         <activity
             android:name=".Activity.BaseActivity"
             android:exported="false" />
-        <activity
-            android:name=".Activity.IntroActivity"
-            android:exported="true" >  <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter></activity>
     </application>
 
 </manifest>

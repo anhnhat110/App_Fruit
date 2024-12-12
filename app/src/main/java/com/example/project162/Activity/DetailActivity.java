@@ -25,46 +25,103 @@ public class DetailActivity extends BaseActivity {
         getWindow().setStatusBarColor(getResources().getColor(R.color.black));
 
         getIntentExtra();
-        setVariable();
+        initCartManager();
+        setProductDetails();
+        setupListeners();
     }
 
-    private void setVariable() {
+    /**
+     * Khởi tạo đối tượng quản lý giỏ hàng.
+     */
+    private void initCartManager() {
         managmentCart = new ManagmentCart(this);
+    }
 
+    /**
+     * Hiển thị thông tin sản phẩm chi tiết.
+     */
+    private void setProductDetails() {
+        if (object != null) {
+            Glide.with(this)
+                    .load(object.getImagePath())
+                    .into(binding.pic);
+
+            // Định dạng và hiển thị giá sản phẩm
+            binding.priceTxt.setText(formatPriceWithCommas(object.getPrice()) + " VND");
+
+            binding.titleTxt.setText(object.getTitle());
+            binding.descriptionTxt.setText(object.getDescription());
+            binding.rateTxt.setText(object.getStar() + " Rating");
+            binding.ratingBar.setRating((float) object.getStar());
+
+            // Hiển thị tổng giá trị ban đầu
+            binding.totalTxt.setText(formatPriceWithCommas(num * object.getPrice()) + " VND");
+            binding.numTxt.setText(String.valueOf(num));
+        } else {
+            // Xử lý trường hợp object = null
+            binding.titleTxt.setText("Product not found");
+            binding.descriptionTxt.setText("");
+            binding.priceTxt.setText("0 VND");
+            binding.totalTxt.setText("0 VND");
+        }
+    }
+
+    /**
+     * Cài đặt các sự kiện nút nhấn.
+     */
+    private void setupListeners() {
         binding.backBtn.setOnClickListener(v -> finish());
 
-        Glide.with(DetailActivity.this)
-                .load(object.getImagePath())
-                .into(binding.pic);
-
-        binding.priceTxt.setText(object.getPrice() + " vnd");
-        binding.titleTxt.setText(object.getTitle());
-        binding.descriptionTxt.setText(object.getDescription());
-        binding.rateTxt.setText(object.getStar() + " Rating");
-        binding.ratingBar.setRating((float) object.getStar());
-        binding.totalTxt.setText((num * object.getPrice() + " vnd"));
-
         binding.plusBtn.setOnClickListener(v -> {
-            num = num + 1;
-            binding.numTxt.setText(num + " ");
-            binding.totalTxt.setText( (num * object.getPrice()) + " vnd");
+            num++;
+            updateQuantityAndTotal();
         });
 
         binding.minusBtn.setOnClickListener(v -> {
             if (num > 1) {
-                num = num - 1;
-                binding.numTxt.setText(num + "");
-                binding.totalTxt.setText((num * object.getPrice()) + " vnd");
+                num--;
+                updateQuantityAndTotal();
             }
         });
 
         binding.addBtn.setOnClickListener(v -> {
-            object.setNumberInCart(num);
-            managmentCart.insertFood(object);
+            if (object != null) {
+                object.setNumberInCart(num);
+                managmentCart.insertFood(object);
+                showToast("Added to cart successfully!");
+            }
         });
     }
 
+    /**
+     * Cập nhật số lượng và tổng giá trị hiển thị.
+     */
+    private void updateQuantityAndTotal() {
+        binding.numTxt.setText(String.valueOf(num));
+        if (object != null) {
+            binding.totalTxt.setText(formatPriceWithCommas(num * object.getPrice()) + " VND");
+        }
+    }
+
+    /**
+     * Định dạng giá tiền với dấu chấm.
+     */
+    private String formatPriceWithCommas(double price) {
+        return String.format("%,d", (int) price).replace(',', '.');
+    }
+
+    /**
+     * Lấy dữ liệu sản phẩm từ Intent.
+     */
     private void getIntentExtra() {
         object = (Foods) getIntent().getSerializableExtra("object");
+    }
+
+    /**
+     * Hiển thị thông báo ngắn gọn.
+     */
+    private void showToast(String message) {
+        // Có thể dùng Toast hoặc Snackbar tùy theo thiết kế
+        // Ví dụ: Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

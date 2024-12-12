@@ -48,21 +48,29 @@ public class CartActivity extends BaseActivity {
     }
 
     private void calculateCart() {
-        double percentTax = 0.02; //percent 2% tax
+        double percentTax = 0.02; // 2% tax
         double delivery = 10; // 10 Dollar
 
-        tax = Math.round(managmentCart.getTotalFee() * percentTax * 100.0) / 100;
+        // Tính thuế
+        tax = Math.round(managmentCart.getTotalFee() * percentTax * 100.0) / 100.0;
 
-        double total = Math.round((managmentCart.getTotalFee() + tax + delivery) * 100) / 100;
-        double itemTotal = Math.round(managmentCart.getTotalFee() * 100) / 100;
+        // Tính tổng tiền
+        double total = Math.round((managmentCart.getTotalFee() + tax + delivery) * 100) / 100.0;
+        double itemTotal = Math.round(managmentCart.getTotalFee() * 100) / 100.0;
 
-        binding.totalFeeTxt.setText( itemTotal +" vnd");
-        binding.taxTxt.setText( tax + " vnd");
-        binding.deliveryTxt.setText(delivery + " vnd");
-        binding.totalTxt.setText(total + " vnd");
+        // Hiển thị các giá trị với dấu chấm phân cách
+        binding.totalFeeTxt.setText(formatPriceWithCommas(itemTotal) + " VNĐ");
+        binding.taxTxt.setText(formatPriceWithCommas(tax) + " VNĐ");
+        binding.deliveryTxt.setText(formatPriceWithCommas(delivery) + " VNĐ");
+        binding.totalTxt.setText(formatPriceWithCommas(total) + " VNĐ");
     }
 
     private void setVariable() {
         binding.backBtn.setOnClickListener(v -> finish());
+    }
+
+    // Phương thức định dạng giá tiền với dấu chấm
+    private String formatPriceWithCommas(double price) {
+        return String.format("%,d", (int) price).replace(',', '.');
     }
 }

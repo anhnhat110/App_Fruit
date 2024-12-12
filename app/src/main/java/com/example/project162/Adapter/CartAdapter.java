@@ -40,22 +40,35 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewholder> {
 
     @Override
     public void onBindViewHolder(@NonNull CartAdapter.viewholder holder, int position) {
-        holder.title.setText(list.get(position).getTitle());
-        holder.feeEachItem.setText((list.get(position).getNumberInCart()*list.get(position).getPrice()) + " vnd");
-        holder.totalEachItem.setText(list.get(position).getNumberInCart()+" * "+(
-                list.get(position).getPrice())+ " vnd");
-        holder.num.setText(list.get(position).getNumberInCart()+"");
+        Foods food = list.get(position);
 
+        // Hiển thị tên món ăn
+        holder.title.setText(food.getTitle());
+
+        // Hiển thị giá tiền cho mỗi sản phẩm
+        String formattedPriceEachItem = formatPriceWithCommas(food.getNumberInCart() * food.getPrice());
+        holder.feeEachItem.setText(formattedPriceEachItem + " VND");
+
+        // Hiển thị giá trị của từng món (số lượng * giá)
+        String formattedPricePerItem = formatPriceWithCommas(food.getPrice());
+        holder.totalEachItem.setText(food.getNumberInCart() + " * VND " + formattedPricePerItem);
+
+        // Hiển thị số lượng của sản phẩm
+        holder.num.setText(String.valueOf(food.getNumberInCart()));
+
+        // Tải ảnh sản phẩm bằng Glide
         Glide.with(holder.itemView.getContext())
-                .load(list.get(position).getImagePath())
-                .transform(new CenterCrop(),new RoundedCorners(30))
+                .load(food.getImagePath())
+                .transform(new CenterCrop(), new RoundedCorners(30))
                 .into(holder.pic);
 
+        // Xử lý sự kiện tăng số lượng
         holder.plusItem.setOnClickListener(v -> managmentCart.plusNumberItem(list, position, () -> {
             notifyDataSetChanged();
             changeNumberItemsListener.change();
         }));
 
+        // Xử lý sự kiện giảm số lượng
         holder.minusItem.setOnClickListener(v -> managmentCart.minusNumberItem(list, position, () -> {
             notifyDataSetChanged();
             changeNumberItemsListener.change();
@@ -83,5 +96,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewholder> {
             totalEachItem = itemView.findViewById(R.id.totalEachItem);
             num = itemView.findViewById(R.id.numberItemTxt);
         }
+    }
+
+    // Phương thức định dạng giá tiền với dấu chấm
+    private String formatPriceWithCommas(double price) {
+        // Dùng String.format để định dạng số với dấu phẩy giữa mỗi 3 chữ số
+        return String.format("%,d", (int) price).replace(',', '.');
     }
 }
