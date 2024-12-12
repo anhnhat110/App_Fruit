@@ -6,12 +6,6 @@ public class Price {
 
     public Price() {
     }
-
-    @Override
-    public String toString() {
-        return  Value ;
-    }
-
     public int getId() {
         return Id;
     }
@@ -26,5 +20,12 @@ public class Price {
 
     public void setValue(String value) {
         Value = value;
+    }
+    @Override
+    public String toString() {
+        if (Value.contains(".0")) {
+            return Value.replace(".0", "") + " VND";
+        }
+        return Value + " VND";
     }
 }

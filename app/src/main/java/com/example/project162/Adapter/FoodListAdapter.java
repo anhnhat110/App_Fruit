@@ -38,36 +38,22 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.viewho
 
     @Override
     public void onBindViewHolder(@NonNull FoodListAdapter.viewholder holder, int position) {
-        Foods food = items.get(position);
+        holder.titleTxt.setText(items.get(position).getTitle());
+        holder.timeTxt.setText(items.get(position).getTimeValue() + " min");
+        holder.priceTxt.setText( items.get(position).getPrice() + " vnd" );
+        holder.rateTxt.setText("" + items.get(position).getStar());
 
-        // Hiển thị tên món ăn và thời gian
-        holder.titleTxt.setText(food.getTitle());
-        holder.timeTxt.setText(food.getTimeValue() + " min");
-
-        // Định dạng giá và hiển thị
-        holder.priceTxt.setText(formatPriceWithCommas(food.getPrice()) + " VND");
-
-        // Hiển thị đánh giá
-        holder.rateTxt.setText(String.valueOf(food.getStar()));
-
-        // Hiển thị ảnh món ăn
         Glide.with(context)
-                .load(food.getImagePath())
+                .load(items.get(position).getImagePath())
                 .transform(new CenterCrop(), new RoundedCorners(30))
                 .into(holder.pic);
 
-        // Xử lý click vào món ăn
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, DetailActivity.class);
-            intent.putExtra("object", food);
+            Intent intent=new Intent(context, DetailActivity.class);
+            intent.putExtra("object",items.get(position));
             context.startActivity(intent);
         });
     }
-
-    private String formatPriceWithCommas(double price) {
-        return String.format("%,d", (int) price).replace(',', '.');
-    }
-
 
     @Override
     public int getItemCount() {
