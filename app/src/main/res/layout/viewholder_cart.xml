@@ -88,7 +88,7 @@
                 android:background="@drawable/edittext_background"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:textColor="@color/red"
+                android:textColor="@color/greentext"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -100,7 +100,7 @@
                 android:background="@drawable/edittext_background"
                 android:gravity="center"
                 android:text="+"
-                android:textColor="@color/red"
+                android:textColor="@color/greentext"
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

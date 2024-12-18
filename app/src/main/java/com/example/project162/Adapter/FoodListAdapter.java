@@ -44,7 +44,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.viewho
         // Định dạng giá với dấu chấm để hiển thị
         String formattedPrice = formatPriceWithCommas(items.get(position).getPrice());
         holder.priceTxt.setText(formattedPrice + " VNĐ");
-
+        holder.priceTxt.setTextColor(context.getResources().getColor(R.color.greentext)); // Chọn màu xanh
         holder.rateTxt.setText("" + items.get(position).getStar());
 
         Glide.with(context)

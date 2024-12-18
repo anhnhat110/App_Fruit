@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginStart="8dp"
-                app:tint="@color/red"
+                app:tint="@color/green"
                 app:layout_constraintBottom_toBottomOf="@+id/timeTxt"
                 app:layout_constraintStart_toEndOf="@+id/timeTxt"
                 app:layout_constraintTop_toTopOf="@+id/timeTxt"

@@ -67,8 +67,7 @@
                     android:layout_marginEnd="6dp"
                     android:background="@drawable/grey_background"
                     android:padding="12dp"
-
-                    app:srcCompat="@drawable/settings" />
+                    app:srcCompat="@drawable/system" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -101,7 +100,7 @@
                         android:layout_marginEnd="4dp"
 
                         android:padding="4dp"
-                        app:srcCompat="@drawable/search_icon" />
+                        app:srcCompat="@drawable/search" />
                 </LinearLayout>
 
                 <ImageView
@@ -112,7 +111,7 @@
                     android:background="@drawable/grey_background"
                     android:padding="12dp"
 
-                    app:srcCompat="@drawable/basket" />
+                    app:srcCompat="@drawable/grocery_store" />
             </LinearLayout>
 
             <LinearLayout
@@ -213,7 +212,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Lựa chọn tốt nhất  hôm nay "
+                    android:text="Lựa chọn tốt nhất hôm nay "
                     android:textColor="@color/blue_grey"
                     android:textSize="20dp"
                     android:textStyle="bold"/>

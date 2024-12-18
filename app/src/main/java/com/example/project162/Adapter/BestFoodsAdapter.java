@@ -43,9 +43,9 @@ public class BestFoodsAdapter extends RecyclerView.Adapter<BestFoodsAdapter.view
 
         // Định dạng tiền
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
-        String formattedPrice = decimalFormat.format(items.get(position).getPrice());
+        String formattedPrice = decimalFormat.format(items.get(position).getPrice()).replace(',', '.');
         holder.priceTxt.setText(formattedPrice + " VNĐ");
-
+        holder.priceTxt.setTextColor(context.getResources().getColor(R.color.greentext)); // Chọn màu xanh
         holder.timeTxt.setText(items.get(position).getTimeValue() + " phút ");
         holder.starTxt.setText("" + items.get(position).getStar());
 

@@ -123,8 +123,7 @@
                     android:src="@drawable/time"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/greentext" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/timeTxt"
@@ -190,7 +189,7 @@ onions."
                     android:background="@drawable/edittext_background"
                     android:gravity="center"
                     android:text="-"
-                    android:textColor="@color/red"
+                    android:textColor="@color/greentext"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -218,7 +217,7 @@ onions."
                     android:background="@drawable/edittext_background"
                     android:gravity="center"
                     android:text="+"
-                    android:textColor="@color/red"
+                    android:textColor="@color/greentext"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"

@@ -45,13 +45,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewholder> {
         // Hiển thị tên món ăn
         holder.title.setText(food.getTitle());
 
-        // Hiển thị giá tiền cho mỗi sản phẩm
+        // Hiển thị giá tiền tổng cộng cho sản phẩm
         String formattedPriceEachItem = formatPriceWithCommas(food.getNumberInCart() * food.getPrice());
         holder.feeEachItem.setText(formattedPriceEachItem + " VND");
+        holder.feeEachItem.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.green)); // Màu xanh
 
-        // Hiển thị giá trị của từng món (số lượng * giá)
-        String formattedPricePerItem = formatPriceWithCommas(food.getPrice());
-        holder.totalEachItem.setText(food.getNumberInCart() + " * VND " + formattedPricePerItem);
+        // Xóa phần hiển thị "2 * VND 35.000"
+        holder.totalEachItem.setVisibility(View.GONE);
 
         // Hiển thị số lượng của sản phẩm
         holder.num.setText(String.valueOf(food.getNumberInCart()));
@@ -74,6 +74,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewholder> {
             changeNumberItemsListener.change();
         }));
     }
+
 
     @Override
     public int getItemCount() {
