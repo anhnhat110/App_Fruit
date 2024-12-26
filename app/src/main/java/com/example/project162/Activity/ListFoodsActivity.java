@@ -1,5 +1,7 @@
 package com.example.project162.Activity;
 
+import static com.example.project162.Activity.Utils.removeDiacritics;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -50,7 +52,11 @@ public class ListFoodsActivity extends BaseActivity {
 
         Query query;
         if (isSearch) {
-            query = myRef.orderByChild("Title").startAt(searchText).endAt(searchText + '\uf8ff');
+            // Loại bỏ dấu trong từ khóa tìm kiếm
+            String searchTextNoDiacritics = removeDiacritics(searchText);
+
+            // Tìm kiếm theo TitleNoDiacritics
+            query = myRef.orderByChild("TitleNoDiacritics").startAt(searchTextNoDiacritics).endAt(searchTextNoDiacritics + '\uf8ff');
         } else {
             query = myRef.orderByChild("CategoryId").equalTo(categoryId);
         }
@@ -76,6 +82,7 @@ public class ListFoodsActivity extends BaseActivity {
             }
         });
     }
+
 
     private void getIntentExtra() {
         categoryId = getIntent().getIntExtra("CategoryId", 0);

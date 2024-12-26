@@ -6,18 +6,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.project162.Adapter.CartAdapter;
-import com.example.project162.Helper.ChangeNumberItemsListener;
 import com.example.project162.Helper.ManagmentCart;
 import com.example.project162.R;
 import com.example.project162.databinding.ActivityCartBinding;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class CartActivity extends BaseActivity {
     private ActivityCartBinding binding;
     private RecyclerView.Adapter adapter;
     private ManagmentCart managmentCart;
     private double tax;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference ordersRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +33,10 @@ public class CartActivity extends BaseActivity {
         setContentView(binding.getRoot());
 
         managmentCart = new ManagmentCart(this);
+
+        // Khởi tạo Firebase
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        ordersRef = firebaseDatabase.getReference("Orders");
 
         setVariable();
         calculateCart();
@@ -45,6 +56,9 @@ public class CartActivity extends BaseActivity {
         binding.cardView.setLayoutManager(linearLayoutManager);
         adapter = new CartAdapter(managmentCart.getListCart(), this, () -> calculateCart());
         binding.cardView.setAdapter(adapter);
+
+        // Thêm sự kiện nút đặt hàng
+        binding.checkoutBtn.setOnClickListener(v -> createOrderInFirebase());
     }
 
     private void calculateCart() {
@@ -67,6 +81,34 @@ public class CartActivity extends BaseActivity {
 
     private void setVariable() {
         binding.backBtn.setOnClickListener(v -> finish());
+    }
+
+    // Phương thức tạo đơn hàng trong Firebase
+    private void createOrderInFirebase() {
+        if (managmentCart.getListCart().isEmpty()) {
+            Toast.makeText(this, "Giỏ hàng rỗng, không thể tạo đơn hàng!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Chuẩn bị dữ liệu đơn hàng
+        Map<String, Object> orderData = new HashMap<>();
+        orderData.put("items", managmentCart.getListCart()); // Danh sách sản phẩm
+        orderData.put("total", managmentCart.getTotalFee());
+        orderData.put("tax", tax);
+        orderData.put("delivery", 10); // Phí giao hàng
+        orderData.put("orderTime", System.currentTimeMillis()); // Thời gian tạo đơn hàng
+
+        // Đẩy dữ liệu lên Firebase
+        ordersRef.push().setValue(orderData).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
+                managmentCart.clearCart(); // Xóa giỏ hàng sau khi đặt hàng thành công
+                initList(); // Cập nhật giao diện
+                calculateCart(); // Cập nhật tổng tiền
+            } else {
+                Toast.makeText(this, "Đặt hàng thất bại. Vui lòng thử lại.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     // Phương thức định dạng giá tiền với dấu chấm
