@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
 
 
-    tools:context=".Activity.ListFoodsActivity">
+    tools:context=".Activity.ListFruitsActivity">
 
     <ScrollView
         android:id="@+id/scrollview"

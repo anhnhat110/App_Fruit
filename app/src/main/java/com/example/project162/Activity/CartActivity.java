@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.project162.Adapter.CartAdapter;
@@ -25,7 +27,8 @@ public class CartActivity extends BaseActivity {
     private double tax;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference ordersRef;
-
+    private EditText addressInput;
+    private RadioGroup paymentMethodGroup;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +36,8 @@ public class CartActivity extends BaseActivity {
         setContentView(binding.getRoot());
 
         managmentCart = new ManagmentCart(this);
-
+        addressInput = findViewById(R.id.addressInput);
+        paymentMethodGroup = findViewById(R.id.paymentMethodGroup);
         // Khởi tạo Firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
         ordersRef = firebaseDatabase.getReference("Orders");
@@ -63,7 +67,7 @@ public class CartActivity extends BaseActivity {
 
     private void calculateCart() {
         double percentTax = 0.02; // 2% tax
-        double delivery = 10; // 10 Dollar
+        double delivery = 15000; // 10 Dollar
 
         // Tính thuế
         tax = Math.round(managmentCart.getTotalFee() * percentTax * 100.0) / 100.0;
@@ -90,6 +94,28 @@ public class CartActivity extends BaseActivity {
             return;
         }
 
+        // Lấy địa chỉ từ EditText
+        String address = addressInput.getText().toString().trim();
+        if (address.isEmpty()) {
+            Toast.makeText(this, "Vui lòng nhập địa chỉ giao hàng!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Lấy phương thức thanh toán từ RadioGroup
+        int selectedPaymentMethodId = paymentMethodGroup.getCheckedRadioButtonId();
+        String paymentMethod = "";
+
+        if (selectedPaymentMethodId == R.id.paymentMethodCash) {
+            paymentMethod = "Thanh toán tiền mặt";
+        } else if (selectedPaymentMethodId == R.id.paymentMethodCard) {
+            paymentMethod = "Thanh toán thẻ";
+        } else if (selectedPaymentMethodId == R.id.paymentMethodOnline) {
+            paymentMethod = "Thanh toán trực tuyến";
+        } else {
+            Toast.makeText(this, "Vui lòng chọn phương thức thanh toán!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         // Chuẩn bị dữ liệu đơn hàng
         Map<String, Object> orderData = new HashMap<>();
         orderData.put("items", managmentCart.getListCart()); // Danh sách sản phẩm
@@ -97,6 +123,8 @@ public class CartActivity extends BaseActivity {
         orderData.put("tax", tax);
         orderData.put("delivery", 10); // Phí giao hàng
         orderData.put("orderTime", System.currentTimeMillis()); // Thời gian tạo đơn hàng
+        orderData.put("address", address); // Địa chỉ giao hàng
+        orderData.put("paymentMethod", paymentMethod); // Phương thức thanh toán
 
         // Đẩy dữ liệu lên Firebase
         ordersRef.push().setValue(orderData).addOnCompleteListener(task -> {
@@ -110,6 +138,7 @@ public class CartActivity extends BaseActivity {
             }
         });
     }
+
 
     // Phương thức định dạng giá tiền với dấu chấm
     private String formatPriceWithCommas(double price) {

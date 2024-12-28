@@ -3,7 +3,6 @@ package com.example.project162.Activity;
 import static com.example.project162.Activity.Utils.removeDiacritics;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,9 +12,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
-import com.example.project162.Adapter.BestFoodsAdapter;
+import com.example.project162.Adapter.BestFruitsAdapter;
 import com.example.project162.Adapter.CategoryAdapter;
 import com.example.project162.Domain.Category;
 import com.example.project162.Domain.Foods;
@@ -28,7 +26,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
@@ -75,21 +72,16 @@ public class MainActivity extends BaseActivity {
                 // Loại bỏ dấu trong từ người dùng nhập
                 String searchTextNoDiacritics = removeDiacritics(text);
 
-                Intent intent = new Intent(MainActivity.this, ListFoodsActivity.class);
+                Intent intent = new Intent(MainActivity.this, ListFruitsActivity.class);
                 intent.putExtra("text", searchTextNoDiacritics); // Sử dụng text không dấu
                 intent.putExtra("isSearch", true);
                 startActivity(intent);
             }
         });
 
-
         binding.cartBtn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, CartActivity.class)));
 
         // New button listener to navigate to ActivityListBestDeal
-        binding.buttonViewAllBestDeal.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, ListBestDealActivity.class); // Intent to new Activity
-            startActivity(intent);
-        });
     }
 
     private void initBestFood() {
@@ -106,7 +98,7 @@ public class MainActivity extends BaseActivity {
                     }
                     if (list.size() > 0) {
                         binding.bestFoodView.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false));
-                        RecyclerView.Adapter adapter = new BestFoodsAdapter(list);
+                        RecyclerView.Adapter adapter = new BestFruitsAdapter(list);
                         binding.bestFoodView.setAdapter(adapter);
                     }
                     binding.progressBarBestFood.setVisibility(View.GONE);

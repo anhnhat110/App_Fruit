@@ -79,6 +79,67 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/addressLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Địa chỉ giao hàng"
+                android:textColor="@color/green"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/addressInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/grey_background"
+                android:hint="Nhập địa chỉ của bạn"
+                android:padding="12dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blue_grey" />
+
+            <!-- Phần chọn phương thức thanh toán -->
+            <TextView
+                android:id="@+id/paymentMethodLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Phương thức thanh toán"
+                android:textColor="@color/green"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <RadioGroup
+                android:id="@+id/paymentMethodGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/paymentMethodCash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thanh toán tiền mặt"
+                    android:textColor="@color/black" />
+
+                <RadioButton
+                    android:id="@+id/paymentMethodCard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thanh toán thẻ"
+                    android:textColor="@color/black" />
+
+                <RadioButton
+                    android:id="@+id/paymentMethodOnline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thanh toán trực tuyến"
+                    android:textColor="@color/black" />
+            </RadioGroup>
+
+            <TextView
                 android:id="@+id/textView16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

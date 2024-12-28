@@ -3,17 +3,15 @@ package com.example.project162.Activity;
 import static com.example.project162.Activity.Utils.removeDiacritics;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.project162.Adapter.FoodListAdapter;
+import com.example.project162.Adapter.FruitListAdapter;
 import com.example.project162.Domain.Foods;
-import com.example.project162.R;
-import com.example.project162.databinding.ActivityListFoodsBinding;
+import com.example.project162.databinding.ActivityListFruitsBinding;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,8 +20,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ListFoodsActivity extends BaseActivity {
-    ActivityListFoodsBinding binding;
+public class ListFruitsActivity extends BaseActivity {
+    ActivityListFruitsBinding binding;
     private RecyclerView.Adapter adapterListFood;
     private int categoryId;
     private String categoryName;
@@ -33,9 +31,8 @@ public class ListFoodsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityListFoodsBinding.inflate(getLayoutInflater());
+        binding = ActivityListFruitsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         getIntentExtra();
         initList();
         setVariable();
@@ -68,8 +65,8 @@ public class ListFoodsActivity extends BaseActivity {
                         list.add(issue.getValue(Foods.class));
                     }
                     if (list.size() > 0) {
-                        binding.foodListView.setLayoutManager(new GridLayoutManager(ListFoodsActivity.this, 2));
-                        adapterListFood = new FoodListAdapter(list);
+                        binding.foodListView.setLayoutManager(new GridLayoutManager(ListFruitsActivity.this, 2));
+                        adapterListFood = new FruitListAdapter(list);
                         binding.foodListView.setAdapter(adapterListFood);
                     }
                     binding.progressBar.setVisibility(View.GONE);
@@ -89,7 +86,6 @@ public class ListFoodsActivity extends BaseActivity {
         categoryName = getIntent().getStringExtra("CategoryName");
         searchText = getIntent().getStringExtra("text");
         isSearch = getIntent().getBooleanExtra("isSearch", false);
-
         binding.titleTxt.setText(categoryName);
         binding.backBtn.setOnClickListener(v -> finish());
     }
